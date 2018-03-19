@@ -19,6 +19,21 @@
 		var canvas = document.getElementById("canvas");
     	var context = canvas.getContext("2d");
 
+    	//create rectangles
+    	var box = {
+      		x: 200,
+      		y: 200,
+      		size: 40,
+      		color: "purple"
+    	}
+
+    	function createBox(){
+      		context.fillStyle = box.color;
+      		context.fillRect(box.x, box.y, box.size, box.size);
+    	}
+
+    	createBox();
+
 	</script>
 </body>
 </html>
