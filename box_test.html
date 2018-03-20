@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Box_Test</title>
+	<title>rect_Test</title>
 </head>
 <body>
 	<canvas id="canvas" width="1000" height="600"></canvas> 
@@ -20,19 +20,42 @@
     	var context = canvas.getContext("2d");
 
     	//create rectangles
-    	var box = {
-      		x: 200,
-      		y: 200,
-      		size: 40,
-      		color: "purple"
+    	var rect = [];
+    	var color = ["red", "green", "purple", "blue"];
+
+    	function createRect(){
+    		return{
+    			x: randomNum(canvas.width),
+    			y: randomNum(canvas.height),
+    			size: 20,
+    			color: "black"
+    		}
     	}
 
-    	function createBox(){
-      		context.fillStyle = box.color;
-      		context.fillRect(box.x, box.y, box.size, box.size);
+    	 function randomNum(a){
+      		return Math.floor(Math.random() * a)
     	}
 
-    	createBox();
+    	function addRect(a){
+    		for (i = 0; i < a; i++) { 
+    			rect.push(createRect())
+    		}
+    	}
+
+    	function drawRect(){
+    		for (i = 0; i < rect.length; i++){
+      		context.fillStyle = rect[i].color;
+      		context.fillRect(rect[i].x, rect[i].y, rect[i].size, rect[i].size);
+    		}
+    	}
+
+    	function playGame(){
+    		addRect(3);
+    		drawRect();
+    	}
+
+    	playGame();
+
 
 	</script>
 </body>
