@@ -4,7 +4,7 @@
 	<title>Fireworks</title>
 </head>
 <body>
-	<canvas class="canvas" id="canvas" width="1250" height="660"></canvas> 
+	<canvas class="canvas" id="canvas" width="1250" height="680"></canvas> 
 	<style type="text/css">
 		#canvas{
 			background-color: black;
@@ -15,19 +15,23 @@
 		//create canvas
 		var canvas = document.getElementById("canvas");
     	var context = canvas.getContext("2d");
+        var circles = [];
 
-    	var circles = [];
-        var circlesSize = 40;
-        var maxDuration = 75;
+        //game settings
+        var gameSettings = {
+          numberOfCircles: 150,
+          size: 20,
+          duration: 100
+        }
 
         //create circles
         function createcircles(){
     		return{
-    			x: randomPosition(canvas.width - circlesSize),
-    			y: randomPosition(canvas.height - circlesSize),
+    			x: randomPosition(canvas.width - gameSettings.size),
+    			y: randomPosition(canvas.height - gameSettings.size),
     			size: randomSize(),
     			color: randomColor(),
-                duration: randomDuration(maxDuration)
+                duration: randomDuration(gameSettings.duration)
     		}
     	}
 
@@ -49,7 +53,7 @@
     	}
 
     	//add circles
-    	function addcircles(a){
+    	function addCircles(a){
     		for (i = 0; i < a; i++) { 
     			circles.push(createcircles())
     		}
@@ -87,7 +91,7 @@
         			circles[i].duration -= 1
         		}else{
         			 circles.splice(i,1);
-        			 addcircles(1);
+        			 addCircles(1);
 
         		}
         	}
@@ -101,7 +105,7 @@
     		requestAnimationFrame(play);
     	}
 
-    	addcircles(20);
+    	addCircles(20);
     	play();
 
 
