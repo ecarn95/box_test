@@ -11,37 +11,47 @@
 		}
 	</style>
 	<script type="text/javascript">
+
 		//create canvas
 		var canvas = document.getElementById("canvas");
     	var context = canvas.getContext("2d");
 
-    	var box = [];
-        var boxSize = 40;
+    	var circles = [];
+        var circlesSize = 40;
         var maxDuration = 75;
 
-        //create box
-        function createBox(){
+        //create circles
+        function createcircles(){
     		return{
-    			x: randomPosition(canvas.width - boxSize),
-    			y: randomPosition(canvas.height - boxSize),
+    			x: randomPosition(canvas.width - circlesSize),
+    			y: randomPosition(canvas.height - circlesSize),
     			size: randomSize(),
     			color: randomColor(),
                 duration: randomDuration(maxDuration)
     		}
     	}
 
-    	//draw box
-    	function drawBox(){
-    		for (i = 0; i < box.length; i++){
-      		context.fillStyle = box[i].color;
-      		context.fillRect(box[i].x, box[i].y, box[i].size, box[i].size);
-    		}
+    	//draw circles
+    	function drawCircle(){
+	      for(i=0; i<circles.length; i++) {
+	        context.beginPath();
+	        context.arc(
+	          circles[i].x,
+	          circles[i].y,
+	          circles[i].size,
+	          0,
+	          2*Math.PI
+	        );
+	        context.fillStyle = circles[i].color;
+	        context.fill();
+	        context.stroke();
+	      }
     	}
 
-    	//add box
-    	function addBox(a){
+    	//add circles
+    	function addcircles(a){
     		for (i = 0; i < a; i++) { 
-    			box.push(createBox())
+    			circles.push(createcircles())
     		}
     	}
 
@@ -72,12 +82,12 @@
 
         //reduce duration 
         function reduceDuration(){
-        	for (var i = 0; i < box.length; i++) {
-        		if (box[i].duration > 0){
-        			box[i].duration -= 1
+        	for (var i = 0; i < circles.length; i++) {
+        		if (circles[i].duration > 0){
+        			circles[i].duration -= 1
         		}else{
-        			 box.splice(i,1);
-        			 addBox(1);
+        			 circles.splice(i,1);
+        			 addcircles(1);
 
         		}
         	}
@@ -86,12 +96,12 @@
         //play function 
         function play(){
         	context.clearRect(0,0,canvas.width,canvas.height);
-    		drawBox();
     		reduceDuration();
+    		drawCircle();
     		requestAnimationFrame(play);
     	}
 
-    	addBox(20);
+    	addcircles(20);
     	play();
 
 
