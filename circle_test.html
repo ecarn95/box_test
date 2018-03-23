@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fireworks</title>
+</head>
+<body>
+	<canvas class="canvas" id="canvas" width="1250" height="660"></canvas> 
+	<style type="text/css">
+		#canvas{
+			background-color: black;
+		}
+	</style>
+	<script type="text/javascript">
+		//create canvas
+		var canvas = document.getElementById("canvas");
+    	var context = canvas.getContext("2d");
+
+    	var box = [];
+        var boxSize = 40;
+        var maxDuration = 75;
+
+        //create box
+        function createBox(){
+    		return{
+    			x: randomPosition(canvas.width - boxSize),
+    			y: randomPosition(canvas.height - boxSize),
+    			size: randomSize(),
+    			color: randomColor(),
+                duration: randomDuration(maxDuration)
+    		}
+    	}
+
+    	//draw box
+    	function drawBox(){
+    		for (i = 0; i < box.length; i++){
+      		context.fillStyle = box[i].color;
+      		context.fillRect(box[i].x, box[i].y, box[i].size, box[i].size);
+    		}
+    	}
+
+    	//add box
+    	function addBox(a){
+    		for (i = 0; i < a; i++) { 
+    			box.push(createBox())
+    		}
+    	}
+
+		//random position
+    	function randomPosition(a){
+      		return Math.floor(Math.random() * a)
+    	}
+
+    	//random size
+    	function randomSize(){
+    		return Math.floor((Math.random() * 40) + 20)
+    	}
+
+    	//random color
+    	function randomColor() {
+          var letters = '0123456789ABCDEF';
+          var color = '#';
+          for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+          }
+          	return color;
+        }
+
+        //random duration 
+        function randomDuration(a){
+        	return Math.floor(Math.random() * a)
+        }
+
+        //reduce duration 
+        function reduceDuration(){
+        	for (var i = 0; i < box.length; i++) {
+        		if (box[i].duration > 0){
+        			box[i].duration -= 1
+        		}else{
+        			 box.splice(i,1);
+        			 addBox(1);
+
+        		}
+        	}
+    	}
+
+        //play function 
+        function play(){
+        	context.clearRect(0,0,canvas.width,canvas.height);
+    		drawBox();
+    		reduceDuration();
+    		requestAnimationFrame(play);
+    	}
+
+    	addBox(20);
+    	play();
+
+
+
+
+	</script>
+</body>
+</html>
